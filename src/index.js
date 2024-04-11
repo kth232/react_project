@@ -4,14 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HelmetProvider } from 'react-helmet-async'; //타이틀 이름 적용
+import { BrowserRouter } from 'react-router-dom';
+import ErrorPage from './commons/pages/Error'; 
 import './i18n'; //다국어 처리
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <HelmetProvider>
-      <App />
-    </HelmetProvider>
+    <ErrorPage>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </ErrorPage>
   </React.StrictMode>,
 );
 
