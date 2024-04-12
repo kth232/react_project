@@ -18,3 +18,11 @@ a {text-decoration: none; color:#000;}
 
 img {border: 0;}
 /*기본 스타일 초기화*/
+
+/*기준 설정*/
+.layout-width {
+  width: 100%;
+  /*max-width: 1200px;
+  min-width: 1000px;*/
+  margin: 0 auto;
+}
