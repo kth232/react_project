@@ -194,7 +194,7 @@ root.render(
 
 ## 없는 페이지
 
-- '\*' : 없는 페이지: commons/pages/NotFound.js
+- \* : 없는 페이지: commons/pages/NotFound.js
 
 ## 에러 페이지
 
@@ -202,3 +202,10 @@ root.render(
 
 - commons/pages/Error.js
 - commons/components/ErrorDisplay.js
+
+## 스타일링
+### 공통 스타일: src/index.css
+- 공통 폰트
+- 스타일 초기화
+- 기준 폰트 사이즈: styles/fontSize.js ->small, normal, medium, big, extraBig
+- 기준 컬러: Primary, Secondary, success, Danger, warning, info, light, dark
