@@ -15,7 +15,7 @@ const { primary, dark, light } = color;
 
 const HeaderBox = styled.header`
   .site-top {
-    background: #dfdfdf;
+    background: #A0BAED;
     border-bottom: 1px solid #d5d5d5;
     height: 40px;
 
@@ -26,7 +26,8 @@ const HeaderBox = styled.header`
         display: inline-block;
         line-height: 40px;
         margin: 0 10px;
-        font-size: ${fontSize.normal};
+        font-size: ${fontSize.medium};
+        font-weight: 700;
 
         &.on {
           color: ${color.primary};
@@ -59,7 +60,7 @@ const HeaderBox = styled.header`
           width: 45px;
           background: ${dark};
           border: 0;
-          cursor: pointer; //버튼 위로 마우스 올리면 손가락 모양 커서로 바뀜
+          cursor: pointer;
 
           svg {
             color: ${light};

@@ -1,25 +1,24 @@
-import {Route, Routes} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-const MainLayout = loadable (()=>import('./layouts/MainLayout'))
-const NotFound = loadable (()=>import('./commons/pages/NotFound'))
-const Main = loadable (()=>import('./main/pages/Main')) //main page
+const MainLayout = loadable(() => import('./layouts/MainLayout'));
+const NotFound = loadable(() => import('./commons/pages/NotFound'));
+const Main = loadable(() => import('./main/pages/Main')); //main page
 
 /* 회원 페이지 S */
-const Signup= loadable(()=>import('./member/pages/Signup'))
-const Login= loadable(()=>import('./member/pages/Login'))
+const Signup = loadable(() => import('./member/pages/Signup'));
+const Login = loadable(() => import('./member/pages/Login'));
 /* 회원 페이지 E */
 
 const App = () => {
   return (
     <Routes>
-       <Route path="/" element={<MainLayout />}>
+      <Route path="/" element={<MainLayout />}>
         <Route index element={<Main />} /> {/* 메인 페이지 */}
-        
         {/* 회원 페이지 S */}
-        <Route path = 'member'> 
-          <Route path='Signup' elememt={<Signup/>} />
-          <Route path="member" element={<MainLayout/>} />
+        <Route path="member">
+          <Route path="Signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
         </Route>
         {/* 회원 페이지 E */}
         <Route path="*" element={<NotFound />} /> {/* 없는 페이지 */}
