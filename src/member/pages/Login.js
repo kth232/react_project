@@ -30,7 +30,7 @@ const OuterBox = styled.div`
 
 const Login = () => {
   const { t } = useTranslation();
-/*
+  /*
   return (<UserInfoConsumer>
     {({states: {userInfo, isLogin}, actions})=>(
       <>

@@ -9,11 +9,12 @@ const LoginContainer = () => {
   const [errors, setErrors] = useState({}); //상태값과 함수
   const [searchParams] = useSearchParams(); //조회만 할 것
 
-  const { t } = useTranslation;
-  const navigate = useNavigate;
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const {actions:{setIsLogin, setUserInfo},
-}=useContext(UserInfoContext);
+  const {
+    actions: { setIsLogin, setUserInfo },
+  } = useContext(UserInfoContext);
 
   /**
    * 로그인 처리
@@ -38,27 +39,28 @@ const LoginContainer = () => {
       };
       for (const [field, msg] of Object.entries(requiredFields)) {
         if (!form[field] || !form[field].trim()) {
-            _errors[field] = _errors[field] || [];
-            _errors[field].push(msg);
-            hasErrors =true;
+          _errors[field] = _errors[field] || [];
+          _errors[field].push(msg);
+          hasErrors = true;
         }
       }
       /* 데이터 검증-필수항목 체크 e */
 
       setErrors(_errors);
 
-      if (hasErrors) { //검증 실패이면 로그인 처리x
+      if (hasErrors) {
+        //검증 실패이면 로그인 처리x
         return;
       }
       //로그인 처리
       setIsLogin(true);
-      setUserInfo({email: 'user01@test.org', name: 'user01'});
+      setUserInfo({ email: 'user01@test.org', name: 'user01' });
       /**
        * 후속 처리: 회원전용 서비스 URL로 이동
        * 예) /member/login?redirectURL=로그인 후 이동할 경로
        */
-      const redirectURL = searchParams.get("redirectURL") || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
-      navigate(redirectURL, {replace: true});
+      const redirectURL = searchParams.get('redirectURL') || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
+      navigate(redirectURL, { replace: true });
     },
     [t, form, searchParams, navigate],
   );
