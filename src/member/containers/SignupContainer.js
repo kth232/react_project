@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import JoinForm from '../components/JoinForm';
+import SignupForm from '../components/SignupForm';
 
-const JoinContainer = () => {
+const SignupContainer = () => {
   // 양식 데이터
   const [form, setForm] = useState({
     agree: false,
@@ -46,11 +46,11 @@ const JoinContainer = () => {
 
       for (const [field, msg] of Object.entries(requiredFields)) {
         // !form[field] - null, undefined, '' 체크, !form[field].trim() - '    '
-        if (!form[field] || (form[field] && !form[field].trim())) {
+        if (!form[field] || (typeof form[field] === 'string' && !form[field].trim())) {
           _errors[field] = _errors[field] || [];
           _errors[field].push(msg);
           hasErrors = true;
-        }
+        } //트림메소드는 문자열만 됨, 문자열인지 체크+공백 체크 후 제거->다시 체크했는데 값이 없다? =입력값x
       }
 
       /* 데이터 검증 - 필수 항목 체크 E */
@@ -94,7 +94,7 @@ const JoinContainer = () => {
   const onReset = useCallback(() => setForm({ agree: false }), []);
 
   return (
-    <JoinForm
+    <SignupForm
       form={form}
       errors={errors}
       onSubmit={onSubmit}
@@ -105,4 +105,4 @@ const JoinContainer = () => {
   );
 };
 
-export default React.memo(JoinContainer);
+export default React.memo(SignupContainer);

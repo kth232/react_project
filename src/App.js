@@ -9,6 +9,9 @@ const Main = loadable(() => import('./main/pages/Main')); //main page
 const Signup = loadable(() => import('./member/pages/Signup'));
 const Login = loadable(() => import('./member/pages/Login'));
 /* 회원 페이지 E */
+/*마이 페이지 s*/
+const MypageMain= loadable(()=>import('./mypage/pages/MypageMain'));
+/*마이 페이지 e*/
 
 const App = () => {
   return (
@@ -21,6 +24,11 @@ const App = () => {
           <Route path="login" element={<Login />} />
         </Route>
         {/* 회원 페이지 E */}
+        {/*마이 페이지 s*/}
+        <Route path="mypage">
+          <Route index element={<MypageMain />} />
+          </Route>
+        {/*마이 페이지 e*/}
         <Route path="*" element={<NotFound />} /> {/* 없는 페이지 */}
       </Route>
     </Routes>
