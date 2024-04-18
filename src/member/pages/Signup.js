@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import SignupForm from '../components/SignupForm';
+import SignupContainer from '../containers/SignupContainer';
 import { OuterBox } from '../../commons/components/LayoutBox';
 import { MainTitle } from '../../commons/components/TitleBox';
 
@@ -15,7 +15,7 @@ const Signup = () => {
       </Helmet>
       <OuterBox>
         <MainTitle>{t('회원가입')}</MainTitle>
-        <SignupForm />
+        <SignupContainer />
       </OuterBox>
     </>
   ); /*제목도 공통 스타일로 분리해서 만들 예정*/
