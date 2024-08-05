@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { apiJoin } from '../apis/apiJoin';
 import SignupForm from '../components/SignupForm';
 
 const SignupContainer = () => {
@@ -40,7 +41,7 @@ const SignupContainer = () => {
         email: t('이메일을_입력하세요.'),
         password: t('비밀번호를_입력하세요.'),
         confirmPassword: t('비밀번호를_확인하세요.'),
-        name: t('회원명을_입력하세요.'),
+        userName: t('회원명을_입력하세요.'),
         agree: t('회원가입_약관에_동의하세요.'),
       };
 
@@ -66,14 +67,16 @@ const SignupContainer = () => {
         hasErrors = true;
       }
 
+      /* 가입처리 S*/
+      apiJoin(form);
+      /* 가입처리 E*/
+
       setErrors(_errors);
 
       if (hasErrors) {
         // 검증 실패시 가입 처리 X
         return;
       }
-
-      /* 가입처리 */
 
       /* 가입완료 후 로그인 페이지 이동 */
       navigate('/member/login', { replace: true }); // replace: true -> 방문기록 X
