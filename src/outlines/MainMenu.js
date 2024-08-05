@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {color} from '../styles/color';
+import { color } from '../styles/color';
 import fontSize from '../styles/fontSize';
 
 const { dark, primary, light } = color;
@@ -46,4 +46,4 @@ const MainMenu = () => {
   );
 };
 
-export default React.meno(MainMenu);
+export default React.memo(MainMenu);

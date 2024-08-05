@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,13 @@ import { color } from '../styles/color';
 import logo from '../images/logo.png';
 
 import MainMenu from './MainMenu';
+import UserInfoContext from '../member/modules/UserInfoContext';
 
 const { primary, dark, light } = color;
 
 const HeaderBox = styled.header`
   .site-top {
-    background: #dfdfdf;
+    background: #a0baed;
     border-bottom: 1px solid #d5d5d5;
     height: 40px;
 
@@ -26,7 +27,8 @@ const HeaderBox = styled.header`
         display: inline-block;
         line-height: 40px;
         margin: 0 10px;
-        font-size: ${fontSize.normal};
+        font-size: ${fontSize.medium};
+        font-weight: 700;
 
         &.on {
           color: ${color.primary};
@@ -59,41 +61,68 @@ const HeaderBox = styled.header`
           width: 45px;
           background: ${dark};
           border: 0;
-          cursor: pointer; //버튼 위로 마우스 올리면 손가락 모양 커서로 바뀜
+          cursor: pointer;
 
           svg {
             color: ${light};
-            font-size: 1.5rem; 
+            font-size: 1.5rem;
           }
         }
       }
     }
     img {
-      height: 200px;
+      height: 140px;
     }
   }
 `;
 
 const Header = () => {
   const { t } = useTranslation();
+  const {
+    states: { isLogin, userInfo },
+  } = useContext(UserInfoContext);
 
   return (
     <HeaderBox>
       <section className="site-top">
         <div className="layout-width">
-          <NavLink
-            to="/member/signup"
-            className={({ isActive }) => classNames({ on: isActive })}
-          >
-            {t('회원가입')}
-          </NavLink>
-          <NavLink
-            to="/member/login"
-            className={({ isActive }) => classNames({ on: isActive })}
-          >
-            {t('로그인')}
-          </NavLink>
-          {/* NavLink: 현재 페이지가 링크와 동일하면 true/ 참일 때 on클래스 추가됨 */}
+          {isLogin ? (
+            <>
+              {/* 로그인 상태, 상태에 따라 링크 다르게 보임*/}
+              <span>
+                {userInfo.name}({userInfo.email}){t('님_로그인')}
+              </span>
+              <navLink
+                to="/mypage"
+                classname={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('마이페이지')}
+              </navLink>
+              <navLink
+                to="/member/logout"
+                classname={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('로그아웃')}
+              </navLink>
+            </>
+          ) : (
+            <>
+              {/* 미로그인 상태*/}
+              <NavLink
+                to="/member/signup"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('회원가입')}
+              </NavLink>
+              <NavLink
+                to="/member/login"
+                className={({ isActive }) => classNames({ on: isActive })}
+              >
+                {t('로그인')}
+              </NavLink>
+              {/* NavLink: 현재 페이지가 링크와 동일하면 true/ 참일 때 on클래스 추가됨 */}
+            </>
+          )}
         </div>
       </section>
       <section className="logo-search">
