@@ -26,7 +26,9 @@ const UserInfoProvider = ({ children }) => {
     </UserInfoContext.Provider>
   );
 };
-const {Consumer: UserInfoConsumer}=UserInfoContext;
-export {UserInfoConsumer, UserInfoProvider};
+
+const { Consumer: UserInfoConsumer } = UserInfoContext;
+
+export { UserInfoConsumer, UserInfoProvider };
 //리액트 전역에서 모든 컴포넌트 접근 가능하도록 상태 관리
 export default UserInfoContext;

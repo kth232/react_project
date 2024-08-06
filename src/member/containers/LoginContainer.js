@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import UserInfoContext from '../modules/UserInfoContext';
+import { apiLogin } from '../apis/apiLogin';
+import cookies from 'react-cookies';
+
 //처리 관련 부분
 const LoginContainer = () => {
   const [form, setForm] = useState({});
@@ -26,7 +29,7 @@ const LoginContainer = () => {
    * 3. 후속 처리: 회원 전용 서비스 URL로 이동->useNavigate
    */
   const onSubmit = useCallback(
-    (e) => {
+    (e) => { 
       e.preventDefault();
 
       const _errors = {};
@@ -52,15 +55,27 @@ const LoginContainer = () => {
         //검증 실패이면 로그인 처리x
         return;
       }
-      //로그인 처리
-      setIsLogin(true);
-      setUserInfo({ email: 'user01@test.org', name: 'user01' });
-      /**
-       * 후속 처리: 회원전용 서비스 URL로 이동
-       * 예) /member/login?redirectURL=로그인 후 이동할 경로
-       */
-      const redirectURL = searchParams.get('redirectURL') || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
-      navigate(redirectURL, { replace: true });
+
+      apiLogin(form)
+      .then((res) => {
+        const token = res.data;
+        cookies.save('token', token, {path: '/'});
+        //로그인 처리
+        //setIsLogin(true);
+        //setUserInfo({ email: 'user01@test.org', name: 'user01' });
+
+        /**
+         * 후속 처리: 회원전용 서비스 URL로 이동
+         * 예) /member/login?redirectURL=로그인 후 이동할 경로
+         */
+        const redirectURL = searchParams.get('redirectUrl') || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
+        navigate(redirectURL, { replace: true });
+      })
+      .catch((err) => {
+        _errors.global = _errors.global ?? [];
+        _errors.global.push(err.message);
+        setErrors({ ..._errors });
+      });
     },
     [t, form, searchParams, navigate],
   );
