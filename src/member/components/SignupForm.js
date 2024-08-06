@@ -89,7 +89,7 @@ const SignupForm = ({
           <InputBox
             type="password"
             name="confirmpassword"
-            value={form.password ?? ''}
+            value={form.confirmpassword ?? ''}
             onChange={onChange}
           />
           <MessageBox messages={errors.confirmPassword} color="danger" />
@@ -113,7 +113,7 @@ const SignupForm = ({
       </div>
 
       <ButtonGroup width={450}>
-        <BigButton type="reset" color="light">
+        <BigButton type="reset" color="light" onClick={onReset}>
           {t('다시 입력')}
         </BigButton>
         <BigButton type="submit" color="dark">
