@@ -43,11 +43,15 @@ const SignupContainer = () => {
         confirmPassword: t('비밀번호를_확인하세요.'),
         userName: t('회원명을_입력하세요.'),
         agree: t('회원가입_약관에_동의하세요.'),
+        mobile: t('전화번호를 입력하세요.'),
       };
 
       for (const [field, msg] of Object.entries(requiredFields)) {
         // !form[field] - null, undefined, '' 체크, !form[field].trim() - '    '
-        if (!form[field] || (typeof form[field] === 'string' && !form[field].trim())) {
+        if (
+          !form[field] ||
+          (typeof form[field] === 'string' && !form[field].trim())
+        ) {
           _errors[field] = _errors[field] || [];
           _errors[field].push(msg);
           hasErrors = true;
@@ -62,24 +66,44 @@ const SignupContainer = () => {
         form.confirmPassword &&
         form.password !== form.confirmPassword
       ) {
+        console.log(form);
         _errors.confirmPassword = _errors.confirmPassword || [];
         _errors.confirmPassword.push(t('비밀번호가_정확하지_않습니다.'));
         hasErrors = true;
       }
 
-      /* 가입처리 S*/
-      apiJoin(form);
-      /* 가입처리 E*/
-
-      setErrors(_errors);
-
       if (hasErrors) {
         // 검증 실패시 가입 처리 X
+        setErrors(_errors);
         return;
       }
 
+      /* 가입 처리 S*/
+      apiJoin(form)
+        .then(() => {
+          /* 가입완료 후 로그인 페이지 이동 */
+          navigate('/member/login', { replace: true }); // replace: true -> 방문기록 X
+        })
+        .catch((err) => {
+          console.log(err);
+          //검증 실패, 가입 실패
+          const messages =
+            typeof err.message === 'string'
+              ? { global: [err.message] }
+              : err.message; //자주 사용하는 메세지 글로벌로 지정해서 사요함
+
+          for (const [field, _messages] of Object.entries(messages)) {
+            _errors[field] = _errors[field] ?? [];
+            _errors[field].push(_messages);
+          }
+          setErrors({ ..._errors });
+        });
+
+      // 기존 검증 실패 시 유입 안됨, 프론트 단계에서 검증에 대해 미리 검사하는 것도 좋다
+      /* 가입처리 E*/
+
       /* 가입완료 후 로그인 페이지 이동 */
-      navigate('/member/login', { replace: true }); // replace: true -> 방문기록 X
+      //navigate('/member/login', { replace: true }); // replace: true -> 방문기록 X
     },
     [t, form, navigate],
   );
