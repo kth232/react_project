@@ -36,7 +36,7 @@ const FormBox = styled.form`
   }
 `;
 
-const SignupForm = ({
+const JoinForm = ({
   form,
   onSubmit,
   onChange,
@@ -124,4 +124,4 @@ const SignupForm = ({
   );
 };
 
-export default React.memo(SignupForm);
+export default React.memo(JoinForm);

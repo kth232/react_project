@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { apiJoin } from '../apis/apiJoin';
-import SignupForm from '../components/SignupForm';
+import JoinForm from '../components/JoinForm';
 
-const SignupContainer = () => {
+const JoinContainer = () => {
   // 양식 데이터
   const [form, setForm] = useState({
     agree: false,
@@ -121,7 +121,7 @@ const SignupContainer = () => {
   const onReset = useCallback(() => setForm({ agree: false }), []);
 
   return (
-    <SignupForm
+    <JoinForm
       form={form}
       errors={errors}
       onSubmit={onSubmit}
@@ -132,4 +132,4 @@ const SignupContainer = () => {
   );
 };
 
-export default React.memo(SignupContainer);
+export default React.memo(JoinContainer);

@@ -6,12 +6,18 @@ const NotFound = loadable(() => import('./commons/pages/NotFound'));
 const Main = loadable(() => import('./main/pages/Main')); //main page
 
 /* 회원 페이지 S */
-const Signup = loadable(() => import('./member/pages/Signup'));
-const Login = loadable(() => import('./member/pages/Login'));
+const Join = loadable(() => import('./member/pages/Join'));
+const Login = loadable(() => import('./member/pages/Login')); //지연로딩
+const Logout = loadable(() => import('./member/pages/Logout'));
 /* 회원 페이지 E */
+
 /*마이 페이지 s*/
 const MypageMain= loadable(()=>import('./mypage/pages/MypageMain'));
 /*마이 페이지 e*/
+
+/* 뉴스 페이지 S */
+const News = loadable(() => import('./news/pages/News'));
+/* 뉴스 페이지 E */
 
 const App = () => {
   return (
@@ -20,8 +26,9 @@ const App = () => {
         <Route index element={<Main />} /> {/* 메인 페이지 */}
         {/* 회원 페이지 S */}
         <Route path="member">
-          <Route path="Signup" element={<Signup />} />
+          <Route path="Join" element={<Join />} />
           <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />}/>
         </Route>
         {/* 회원 페이지 E */}
         {/*마이 페이지 s*/}
@@ -29,6 +36,9 @@ const App = () => {
           <Route index element={<MypageMain />} />
           </Route>
         {/*마이 페이지 e*/}
+        <Route path="news">
+          <Route path=":category?" element={<News />} />
+        </Route>
         <Route path="*" element={<NotFound />} /> {/* 없는 페이지 */}
       </Route>
     </Routes>

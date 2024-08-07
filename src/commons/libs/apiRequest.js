@@ -1,4 +1,5 @@
 import axios from 'axios'; //axios 모듈 가져오기
+import cookies from 'react-cookies'; //쿠키 모듈 가져오기
 
 export default function apiRequest(url, method = 'GET', data, headers) {
   //get 방식일 땐 주소형태로 입력, data=요청 데이터
@@ -35,6 +36,12 @@ export default function apiRequest(url, method = 'GET', data, headers) {
     options.headers = headers;
     options.body = JSON.stringify(data); //요청 데이터, 바디데이터는 문자열만 가능함
     */
+  }
+
+  const token = cookies.load('token');
+  if (token && token.trim()) {
+    headers = headers ?? {};
+    headers.Authorization = `Bearer ${token}`;
   }
 
   if (headers) options.headers = headers; //헤더가 있으면 기존 것 사용, 없으면 넣어줌

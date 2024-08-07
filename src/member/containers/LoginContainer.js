@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import UserInfoContext from '../modules/UserInfoContext';
-import { apiLogin } from '../apis/apiLogin';
+import { apiLogin, apiUser } from '../apis/apiLogin';
 import cookies from 'react-cookies';
 
 //처리 관련 부분
@@ -16,7 +16,7 @@ const LoginContainer = () => {
   const navigate = useNavigate();
 
   const {
-    actions: { setIsLogin, setUserInfo },
+    actions: { setIsLogin, setUserInfo, setIsAdmin },
   } = useContext(UserInfoContext);
 
   /**
@@ -29,7 +29,7 @@ const LoginContainer = () => {
    * 3. 후속 처리: 회원 전용 서비스 URL로 이동->useNavigate
    */
   const onSubmit = useCallback(
-    (e) => { 
+    (e) => {
       e.preventDefault();
 
       const _errors = {};
@@ -57,27 +57,41 @@ const LoginContainer = () => {
       }
 
       apiLogin(form)
-      .then((res) => {
-        const token = res.data;
-        cookies.save('token', token, {path: '/'});
-        //로그인 처리
-        //setIsLogin(true);
-        //setUserInfo({ email: 'user01@test.org', name: 'user01' });
+        .then((res) => {
+          const token = res.data;
+          cookies.save('token', token, { path: '/' });
 
-        /**
-         * 후속 처리: 회원전용 서비스 URL로 이동
-         * 예) /member/login?redirectURL=로그인 후 이동할 경로
-         */
-        const redirectURL = searchParams.get('redirectUrl') || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
-        navigate(redirectURL, { replace: true });
-      })
-      .catch((err) => {
-        _errors.global = _errors.global ?? [];
-        _errors.global.push(err.message);
-        setErrors({ ..._errors });
-      });
+          (async () => {
+            try {
+              //로그인 처리
+              const user = await apiUser();
+              
+              setIsLogin(true); //로그인 상태
+              setUserInfo(user);
+
+              const isAdmin = user.authorities.some(
+                (a) => a.authority === 'ADMIN',
+              );
+              setIsAdmin(isAdmin); // 관리자 여부
+
+              /**
+               * 후속 처리: 회원전용 서비스 URL로 이동
+               * 예) /member/login?redirectURL=로그인 후 이동할 경로
+               */
+              const redirectURL = searchParams.get('redirectUrl') || '/'; //주소 입력 시 입력한 주소로 이동, 없으면 메인페이지로 이동
+              navigate(redirectURL, { replace: true });
+            } catch (err) {
+              console.error(err);
+            }
+          })();
+        })
+        .catch((err) => {
+          _errors.global = _errors.global ?? [];
+          _errors.global.push(err.message);
+          setErrors({ ..._errors });
+        });
     },
-    [t, form, searchParams, navigate],
+    [t, form, searchParams, navigate, setIsLogin, setUserInfo],
   );
 
   const onChange = useCallback((e) => {
