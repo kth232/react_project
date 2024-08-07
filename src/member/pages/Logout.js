@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cookies from 'react-cookies';
 import UserInfoContext from '../modules/UserInfoContext';
-import userEvent from '@testing-library/user-event';
 
 const Logout = () => {
   const {
@@ -13,13 +12,14 @@ const Logout = () => {
   setUserInfo(null);
   setIsLogin(false);
 
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(!isLogin) {
-    navigate('/member/login', {replace:true});
+    if (!isLogin) {
+      // navigate('/member/login', { replace: true });
+      window.location.href = '/member/login';
     }
-  }, [isLogin, navigate]);
+  }, [isLogin]);
 
   return <></>;
 };

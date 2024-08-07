@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import LoginContainer from '../containers/LoginContainer';
+import GuestOnlyContainer from '../containers/GuestOnlyContainer';
 //import { UserInfoConsumer } from '../modules/UserInfoContext';
 //import UserInfoContext from '../modules/UserInfoContext'
 import fontSize from '../../styles/fontSize';
@@ -42,7 +43,7 @@ const Login = () => {
   ); //버튼 클릭시 상태값 바뀜
   */
   return (
-    <>
+    <GuestOnlyContainer>
       <Helmet>
         <title>{t('로그인')}</title>
       </Helmet>
@@ -50,7 +51,7 @@ const Login = () => {
         <h1>{t('로그인')}</h1>
         <LoginContainer />
       </OuterBox>
-    </>
+    </GuestOnlyContainer>
   );
 };
 
