@@ -36,14 +36,7 @@ const FormBox = styled.form`
   }
 `;
 
-const JoinForm = ({
-  form,
-  onSubmit,
-  onChange,
-  onToggle,
-  onReset,
-  errors,
-}) => {
+const JoinForm = ({ form, onSubmit, onChange, onToggle, onReset, errors }) => {
   const { t } = useTranslation();
   return (
     <FormBox autoComplete="off" onSubmit={onSubmit}>
@@ -53,7 +46,7 @@ const JoinForm = ({
           <InputBox
             type="text"
             name="userName"
-            value={form.userName ?? ''} //userName으로 변수명 맞춰주기
+            value={form.userName ?? ''}
             onChange={onChange}
           />
           <MessageBox messages={errors.userName} color="danger" />
@@ -88,8 +81,8 @@ const JoinForm = ({
         <dd>
           <InputBox
             type="password"
-            name="confirmpassword"
-            value={form.confirmpassword ?? ''}
+            name="confirmPassword"
+            value={form.confirmPassword ?? ''}
             onChange={onChange}
           />
           <MessageBox messages={errors.confirmPassword} color="danger" />
@@ -98,23 +91,25 @@ const JoinForm = ({
       <dl>
         <dt>{t('휴대전화번호')}</dt>
         <dd>
-          <InputBox 
-            type="text" 
-            name="mobile" 
-            value={form.mobile ?? ''} 
-            onChange={onChange}/>
+          <InputBox
+            type="text"
+            name="mobile"
+            value={form.mobile ?? ''}
+            onChange={onChange}
+          />
           <MessageBox messages={errors.mobile} color="danger" />
         </dd>
       </dl>
       <div className="terms-agree" onClick={onToggle}>
         {form.agree ? <FaCheckSquare /> : <FaRegCheckSquare />}
         {t('회원가입_약관에_동의합니다.')}
+
         <MessageBox messages={errors.agree} color="danger" />
       </div>
 
       <ButtonGroup width={450}>
-        <BigButton type="reset" color="light" onClick={onReset}>
-          {t('다시 입력')}
+        <BigButton type="button" color="light" onClick={onReset}>
+          {t('다시입력')}
         </BigButton>
         <BigButton type="submit" color="dark">
           {t('가입하기')}
