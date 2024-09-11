@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { color } from '../styles/color';
 import fontSize from '../styles/fontSize';
+import fontWeight from '../styles/fontWeight';
 
 const { dark, primary, light } = color;
 
@@ -20,6 +21,7 @@ const MenuBox = styled.nav`
       line-height: 50px;
       padding: 0 50px;
       font-size: ${fontSize.medium};
+      font-weight: ${fontWeight.extraBold};
 
       &.on {
         background: ${primary};
